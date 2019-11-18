@@ -1,0 +1,11 @@
+# superuser permissions
+sudo: required
+services:
+  # ask for docker service
+  - docker
+
+before_install:
+  - docker build -t vsysaudie/docker-react -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true vsysaudie/docker-react npm run test
