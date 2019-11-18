@@ -4,8 +4,27 @@ services:
   # ask for docker service
   - docker
 
+# install packages
 before_install:
   - docker build -t vsysaudie/docker-react -f Dockerfile.dev .
 
+# run tests
 script:
   - docker run -e CI=true vsysaudie/docker-react npm run test
+
+deploy:
+  edge: true
+  # built into travis ci
+  provider: elasticbeanstalk
+  region: "ap-southeast-2"
+  app: "docker-react-test"
+  env: "DockerReactTest-env"
+  # taken from S3 bucket
+  bucket_name: "elasticbeanstalk-ap-southeast-2-702370355887"
+  # app name
+  bucket_path: "docker-react-test"
+  # deploy when pushed to branch master
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
