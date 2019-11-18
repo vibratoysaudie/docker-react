@@ -10,5 +10,7 @@ RUN npm run build
 
 # create 'runner' phase
 FROM nginx
+# expose port through dockerfile to aws beanstalk
+EXPOSE 80
 # copy folder created in the 'builder' phase created above to folder where it is served in nginx
 COPY --from=builder /app/build /usr/share/nginx/html
