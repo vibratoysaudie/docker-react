@@ -1,0 +1,25 @@
+# to run => docker-compose up => to build => docker-compose up --build (builds project) => to stop docker-compose down
+# use version 3 of docker compose
+version: '3'
+# container
+services:
+  # container name
+  web:
+    # which image is being used
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # do not map this folder
+      - /app/node_modules
+      - ./:/app
+  tests:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    command: ["npm", "run", "test"]

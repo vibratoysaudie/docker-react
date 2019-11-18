@@ -1,0 +1,13 @@
+# to run this file in directory, you must specify the filename in the cmd, e.g. docker build -f Dockerfile.dev .
+# to run with watch: docker run -p 3000:3000 -v /app/node_modules  -v $(pwd):/app <container id> - docker volume
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+CMD [ "npm", "run", "start" ]
